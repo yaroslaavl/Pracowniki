@@ -36,7 +36,7 @@ public class Pracownik implements Serializable {
     }
 
     public String toString(){
-        return "PESEL: " + pesel +
+        return "\nPESEL: " + pesel +
                 "\n" + "Imię: " + imie +
                 "\n" + "Nazwisko: " + nazwisko +
                 "\n" +"Stanowisko: " + stanowisko +
