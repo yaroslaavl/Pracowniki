@@ -1,0 +1,145 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1251"> 
+  <title>Coverage Report > Dyrektor</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">org.example</a>
+</div>
+
+<h1>Coverage Summary for Class: Dyrektor (org.example)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Dyrektor</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    33.3%
+  </span>
+  <span class="absValue">
+    (2/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    60%
+  </span>
+  <span class="absValue">
+    (6/10)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package org.example;
+&nbsp;
+&nbsp;public class Dyrektor extends Pracownik {
+&nbsp;    private String telefonSlu?bowy;
+&nbsp;    private double dodatekSlu?bowy;
+&nbsp;    private String kartaSlu?bowa;
+&nbsp;    private double limitKoszt;
+&nbsp;    public Dyrektor(String pesel,String imie,String nazwisko,String stanowisko,double wynagrodzenie,String telefonSlu?bowy,double dodatekSlu?bowy,String kartaSlu?bowa,double limitKoszt){
+<b class="fc">&nbsp;        super(pesel,imie,nazwisko,&quot;Dyrektor&quot;,wynagrodzenie);</b>
+<b class="fc">&nbsp;        this.telefonSlu?bowy = telefonSlu?bowy;</b>
+<b class="fc">&nbsp;        this.dodatekSlu?bowy = dodatekSlu?bowy;</b>
+<b class="fc">&nbsp;        this.kartaSlu?bowa = kartaSlu?bowa;</b>
+<b class="fc">&nbsp;        this.limitKoszt = limitKoszt;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    public String toString(){
+<b class="fc">&nbsp;        return super.toString() +</b>
+&nbsp;                &quot;\n&quot; +&quot;TelefonSlu?bowy: &quot; + telefonSlu?bowy +
+&nbsp;                &quot;\n&quot; +&quot;DodatekSlu?bowy: &quot; + dodatekSlu?bowy +
+&nbsp;                &quot;\n&quot; +&quot;KartaSlu?bowa: &quot; + kartaSlu?bowa +
+&nbsp;                &quot;\n&quot; +&quot;LimitKoszt: &quot; + limitKoszt+&quot;\n&quot; ;
+&nbsp;    }
+&nbsp;    public String getTelefonSlu?bowy() {
+<b class="nc">&nbsp;        return telefonSlu?bowy;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public double getDodatekSlu?bowy() {
+<b class="nc">&nbsp;        return dodatekSlu?bowy;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getKartaSlu?bowa() {
+<b class="nc">&nbsp;        return kartaSlu?bowa;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public double getLimitKoszt() {
+<b class="nc">&nbsp;        return limitKoszt;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-16 01:07</div>
+</div>
+</body>
+</html>

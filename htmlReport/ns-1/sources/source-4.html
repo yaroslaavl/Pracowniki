@@ -1,0 +1,404 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1251"> 
+  <title>Coverage Report > Pracownik</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">org.example</a>
+</div>
+
+<h1>Coverage Summary for Class: Pracownik (org.example)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Pracownik</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    8%
+  </span>
+  <span class="absValue">
+    (2/25)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    4.2%
+  </span>
+  <span class="absValue">
+    (7/165)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package org.example;
+&nbsp;
+&nbsp;import java.io.*;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.Iterator;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Scanner;
+&nbsp;import java.util.concurrent.*;
+&nbsp;import java.util.regex.Pattern;
+&nbsp;import java.util.stream.Collectors;
+&nbsp;import java.util.zip.*;
+&nbsp;public class Pracownik implements Serializable {
+&nbsp;    private String pesel;
+&nbsp;    private String imie;
+&nbsp;    private String nazwisko;
+&nbsp;    private String stanowisko;
+&nbsp;    private double wynagrodzenie;
+&nbsp;
+<b class="fc">&nbsp;    public Pracownik(String pesel,String imie,String nazwisko,String stanowisko,double wynagrodzenie){</b>
+<b class="fc">&nbsp;        this.pesel = pesel;</b>
+<b class="fc">&nbsp;        this.imie = imie;</b>
+<b class="fc">&nbsp;        this.nazwisko = nazwisko;</b>
+<b class="fc">&nbsp;        this.stanowisko = stanowisko;</b>
+<b class="fc">&nbsp;        this.wynagrodzenie = wynagrodzenie;</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    public Pracownik() {</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String toString(){
+<b class="fc">&nbsp;        return &quot;PESEL: &quot; + pesel +</b>
+&nbsp;                &quot;\n&quot; + &quot;Imi?: &quot; + imie +
+&nbsp;                &quot;\n&quot; + &quot;Nazwisko: &quot; + nazwisko +
+&nbsp;                &quot;\n&quot; +&quot;Stanowisko: &quot; + stanowisko +
+&nbsp;                &quot;\n&quot; +&quot;Wynagrodzenie: &quot; + wynagrodzenie;
+&nbsp;    }
+&nbsp;    public String getPesel() {
+<b class="nc">&nbsp;        return pesel;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getImie() {
+<b class="nc">&nbsp;        return imie;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getNazwisko() {
+<b class="nc">&nbsp;        return nazwisko;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getStanowisko() {
+<b class="nc">&nbsp;        return stanowisko;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public double getWynagrodzenie() {
+<b class="nc">&nbsp;        return wynagrodzenie;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setPesel(String pesel) {
+<b class="nc">&nbsp;        this.pesel = pesel;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setImie(String imie) {
+<b class="nc">&nbsp;        this.imie = imie;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setNazwisko(String nazwisko) {
+<b class="nc">&nbsp;        this.nazwisko = nazwisko;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setStanowisko(String stanowisko) {
+<b class="nc">&nbsp;        this.stanowisko = stanowisko;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setWynagrodzenie(double wynagrodzenie) {
+<b class="nc">&nbsp;        this.wynagrodzenie = wynagrodzenie;</b>
+&nbsp;    }
+&nbsp;    public void dodaniePracownika(Scanner scanner){
+<b class="nc">&nbsp;        System.out.println(&quot;Dodanie pracownika&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;        System.out.print(&quot;Pesel: &quot;);</b>
+<b class="nc">&nbsp;        pesel = scanner.next();</b>
+&nbsp;
+<b class="nc">&nbsp;        System.out.print(&quot;Imi?: &quot;);</b>
+<b class="nc">&nbsp;        imie = scanner.next();</b>
+<b class="nc">&nbsp;        boolean containsOnlyLetters = Pattern.matches(&quot;[a-zA-Z]+&quot;, imie);</b>
+<b class="nc">&nbsp;        if(!containsOnlyLetters){</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;S?owo nie mo?e zawiera? liczb&quot;);</b>
+&nbsp;
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        System.out.print(&quot;Nazwisko: &quot;);</b>
+<b class="nc">&nbsp;        nazwisko = scanner.next();</b>
+<b class="nc">&nbsp;        boolean containsOnlyLetters2 = Pattern.matches(&quot;[a-zA-Z]+&quot;, nazwisko);</b>
+<b class="nc">&nbsp;        if(!containsOnlyLetters2){</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;S?owo nie mo?e zawiera? liczb&quot;);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        System.out.print(&quot;Stanowisko: &quot;);</b>
+<b class="nc">&nbsp;        stanowisko = scanner.next();</b>
+<b class="nc">&nbsp;        boolean containsOnlyLetters3 = Pattern.matches(&quot;[a-zA-Z]+&quot;, stanowisko);</b>
+<b class="nc">&nbsp;        if(!containsOnlyLetters3){</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;S?owo nie mo?e zawiera? liczb&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        System.out.print(&quot;Wynagrodzenie: &quot;);</b>
+<b class="nc">&nbsp;        wynagrodzenie = scanner.nextDouble();</b>
+&nbsp;
+&nbsp;    }
+&nbsp;    public void usunieciePracownika(Scanner scanner,List&lt;Pracownik&gt; listaPracownikow) {
+<b class="nc">&nbsp;        System.out.println(&quot;Napisz pesel tego kogo chcesz usun??&quot;);</b>
+<b class="nc">&nbsp;        System.out.print(&quot;Pesel: &quot;);</b>
+<b class="nc">&nbsp;        pesel = scanner.next();</b>
+<b class="nc">&nbsp;        Iterator&lt;Pracownik&gt; iterator = listaPracownikow.iterator();</b>
+<b class="nc">&nbsp;        while(iterator.hasNext()) {</b>
+<b class="nc">&nbsp;            Pracownik pracownik = iterator.next();</b>
+<b class="nc">&nbsp;            if (pracownik.getPesel().equals(pesel)) {</b>
+<b class="nc">&nbsp;                System.out.println(&quot;[Tak] - potwierd?&quot;);</b>
+<b class="nc">&nbsp;                System.out.println(&quot;[Nie] - porzu?&quot;);</b>
+<b class="nc">&nbsp;                String wybor = scanner.next();</b>
+<b class="nc">&nbsp;                if(&quot;T&quot;.equalsIgnoreCase(wybor)) {</b>
+<b class="nc">&nbsp;                    iterator.remove();</b>
+<b class="nc">&nbsp;                    System.out.println(&quot;Pracownik usuni?ty&quot;);</b>
+&nbsp;                    return;
+&nbsp;                }else{
+<b class="nc">&nbsp;                    System.out.println(&quot;Anulowanie&quot;);</b>
+&nbsp;                }
+&nbsp;                return;
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;    public void sprawdzeniePesela(List&lt;Pracownik&gt; listaPracownikow,String pesel){
+&nbsp;        for (Pracownik pracownik:
+<b class="nc">&nbsp;                listaPracownikow</b>
+&nbsp;        ) {
+<b class="nc">&nbsp;            if(pesel.equals(pracownik.getPesel())){</b>
+<b class="nc">&nbsp;                throw new NumberFormatException(&quot;Taki pesel ju? istnieje&quot;);</b>
+<b class="nc">&nbsp;            }if(pesel.length()!=11){</b>
+<b class="nc">&nbsp;                throw new NumberFormatException(&quot;Musi by? 11 cyfr w peselu&quot;);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;    public void zapisanieDanych(List&lt;Pracownik&gt; listaPracownikow) {
+<b class="nc">&nbsp;        File file = new File(&quot;C:/all/1.txt&quot;);</b>
+<b class="nc">&nbsp;        ObjectOutputStream oos = null;</b>
+&nbsp;        try {
+<b class="nc">&nbsp;            FileOutputStream fos = new FileOutputStream(file);</b>
+<b class="nc">&nbsp;            if (fos != null) {</b>
+<b class="nc">&nbsp;                oos = new ObjectOutputStream(fos);</b>
+<b class="nc">&nbsp;                oos.writeObject(listaPracownikow);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        } catch (FileNotFoundException e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+<b class="nc">&nbsp;        } catch (IOException e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+&nbsp;        } finally {
+<b class="nc">&nbsp;            if (oos != null) {</b>
+&nbsp;                try {
+<b class="nc">&nbsp;                    oos.close();</b>
+<b class="nc">&nbsp;                } catch (IOException e) {</b>
+<b class="nc">&nbsp;                    throw new RuntimeException(e);</b>
+<b class="nc">&nbsp;                }</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;    public void odczytDanych() throws IOException {
+<b class="nc">&nbsp;        File file_in  = new File(&quot;C:/all/1.txt&quot;);</b>
+<b class="nc">&nbsp;        File file_out  = new File(&quot;C:/all/1.gz&quot;);</b>
+<b class="nc">&nbsp;        BufferedReader sprawdzenie = new BufferedReader(new FileReader(file_in));</b>
+<b class="nc">&nbsp;        if(sprawdzenie.readLine()==null){</b>
+<b class="nc">&nbsp;            sprawdzenie.close();</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Plik pusty&quot;);</b>
+&nbsp;            return;
+&nbsp;        }
+<b class="nc">&nbsp;        BufferedInputStream in = new BufferedInputStream (new FileInputStream(file_in));</b>
+<b class="nc">&nbsp;        BufferedOutputStream out = new BufferedOutputStream (new GZIPOutputStream(new FileOutputStream(file_out)));</b>
+&nbsp;        int c;
+<b class="nc">&nbsp;        while ((c = in.read()) != -1) out.write (c);</b>
+<b class="nc">&nbsp;        in.close();</b>
+<b class="nc">&nbsp;        out.close();</b>
+<b class="nc">&nbsp;        BufferedReader file_in2 = new BufferedReader (new InputStreamReader (new GZIPInputStream(new FileInputStream(file_out))));</b>
+&nbsp;        String s;
+<b class="nc">&nbsp;        while ((s = file_in2.readLine()) != null) {</b>
+<b class="nc">&nbsp;            if (!s.isEmpty()) {</b>
+<b class="nc">&nbsp;                System.out.println(s);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }file_in2.close();</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Pracowniki s? odczytani&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void zapisJednegoPracownika(Pracownik pracownik) throws IOException {
+<b class="nc">&nbsp;        File file_in = new File(&quot;C:/all/2.txt&quot;);</b>
+<b class="nc">&nbsp;        ObjectOutputStream oos = null;</b>
+&nbsp;        try {
+&nbsp;
+<b class="nc">&nbsp;            FileOutputStream fos = new FileOutputStream(file_in);</b>
+<b class="nc">&nbsp;            if (fos != null) {</b>
+<b class="nc">&nbsp;                oos = new ObjectOutputStream(fos);</b>
+<b class="nc">&nbsp;                oos.writeObject(pracownik);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        } catch (FileNotFoundException e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+<b class="nc">&nbsp;        } catch (IOException e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+&nbsp;        } finally {
+<b class="nc">&nbsp;            if (oos != null) {</b>
+&nbsp;                try {
+<b class="nc">&nbsp;                    oos.close();</b>
+<b class="nc">&nbsp;                } catch (IOException e) {</b>
+<b class="nc">&nbsp;                    throw new RuntimeException(e);</b>
+<b class="nc">&nbsp;                }</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;    public void zapisDanychPracownikaAsync(List&lt;Pracownik&gt; listaPracownikow){
+<b class="nc">&nbsp;        ExecutorService executor = Executors.newFixedThreadPool(10);</b>
+<b class="nc">&nbsp;        List&lt;CompletableFuture&lt;Void&gt;&gt; futures = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        for(Pracownik pracownik:listaPracownikow){</b>
+<b class="nc">&nbsp;           CompletableFuture&lt;Void&gt; future = CompletableFuture.runAsync(()-&gt;{</b>
+&nbsp;               try{
+<b class="nc">&nbsp;                   zapisJednegoPracownika(pracownik);</b>
+<b class="nc">&nbsp;               } catch (IOException e) {</b>
+<b class="nc">&nbsp;                   throw new RuntimeException(e);</b>
+<b class="nc">&nbsp;               }</b>
+&nbsp;           },executor);
+<b class="nc">&nbsp;           futures.add(future);</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        CompletableFuture&lt;Void&gt; of = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));</b>
+&nbsp;        try {
+&nbsp;            try {
+<b class="nc">&nbsp;                of.get();</b>
+<b class="nc">&nbsp;                System.out.println(&quot;Zapisanie asynchroniczne&quot;);</b>
+<b class="nc">&nbsp;            } catch (InterruptedException e) {</b>
+<b class="nc">&nbsp;                throw new RuntimeException(e);</b>
+<b class="nc">&nbsp;            } catch (ExecutionException e) {</b>
+<b class="nc">&nbsp;                throw new RuntimeException(e);</b>
+<b class="nc">&nbsp;            }</b>
+&nbsp;            } finally {
+<b class="nc">&nbsp;            executor.shutdown();</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;    public Pracownik odczytDanychJednegoPracownika(File plik) throws IOException {
+<b class="nc">&nbsp;        File file_out = new File(&quot;C:/all/2.txt&quot;);</b>
+<b class="nc">&nbsp;        ObjectInputStream ois = null;</b>
+&nbsp;        try {
+<b class="nc">&nbsp;            FileInputStream fis = new FileInputStream(file_out);</b>
+<b class="nc">&nbsp;            ois = new ObjectInputStream(fis);</b>
+<b class="nc">&nbsp;            Object object = ois.readObject();</b>
+<b class="nc">&nbsp;            if (object instanceof Pracownik) {</b>
+<b class="nc">&nbsp;                return (Pracownik) object;</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;        } catch (FileNotFoundException e) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Plik pusty&quot;);</b>
+<b class="nc">&nbsp;        } catch (IOException e) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;B??d przy odczytaniu lub zapisaniu&quot;);</b>
+<b class="nc">&nbsp;        } catch (ClassNotFoundException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+&nbsp;        } finally {
+<b class="nc">&nbsp;            if (ois != null) {</b>
+&nbsp;                try {
+<b class="nc">&nbsp;                    ois.close();</b>
+<b class="nc">&nbsp;                } catch (IOException e) {</b>
+<b class="nc">&nbsp;                    throw new RuntimeException(e);</b>
+<b class="nc">&nbsp;                }</b>
+&nbsp;            }
+<b class="nc">&nbsp;            BufferedReader file_out2 = new BufferedReader(new InputStreamReader(new FileInputStream(file_out)));</b>
+&nbsp;            String s;
+<b class="nc">&nbsp;            while ((s = file_out2.readLine()) != null) {</b>
+<b class="nc">&nbsp;                if (!s.isEmpty()) {</b>
+<b class="nc">&nbsp;                    System.out.println(s);</b>
+&nbsp;                }
+<b class="nc">&nbsp;            }file_out2.close();</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public CompletableFuture&lt;List&lt;Pracownik&gt;&gt; odczytDanychJednegoPracownikaAsync(List&lt;File&gt; listaPlikow) {
+<b class="nc">&nbsp;        ExecutorService executorService = Executors.newFixedThreadPool(10);</b>
+<b class="nc">&nbsp;        List&lt;CompletableFuture&lt;Pracownik&gt;&gt; futures = listaPlikow.stream()</b>
+<b class="nc">&nbsp;                .map(file -&gt; CompletableFuture.supplyAsync(()-&gt; {</b>
+&nbsp;                    try {
+<b class="nc">&nbsp;                        return odczytDanychJednegoPracownika(file);</b>
+<b class="nc">&nbsp;                    } catch (IOException e) {</b>
+<b class="nc">&nbsp;                        throw new RuntimeException(e);</b>
+&nbsp;                    }
+&nbsp;                },executorService))
+<b class="nc">&nbsp;                .collect(Collectors.toList());</b>
+<b class="nc">&nbsp;             return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))</b>
+<b class="nc">&nbsp;                     .thenApply(ignored -&gt;</b>
+<b class="nc">&nbsp;                             futures.stream()</b>
+<b class="nc">&nbsp;                                     .map(CompletableFuture::join)</b>
+<b class="nc">&nbsp;                                     .toList())</b>
+<b class="nc">&nbsp;        .whenComplete((result,throwable)-&gt;executorService.shutdown());</b>
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-16 01:07</div>
+</div>
+</body>
+</html>
