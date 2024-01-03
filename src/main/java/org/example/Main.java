@@ -23,11 +23,12 @@ public class Main {
             System.out.println("(4) Kopia zapasowa");
             wybor = scanner.nextInt();
 
+            String pesel;
             if (wybor == 1) {
                 System.out.println("Lista pracowników:");
                 wyswietlListePracownikow(listaPracownikow);
 
-            }else if(wybor == 2){
+            } else if (wybor == 2) {
                 try {
                     Pracownik nowyPracownik = new Pracownik();
                     nowyPracownik.dodaniePracownika(scanner);
@@ -35,100 +36,114 @@ public class Main {
                     System.out.println("[T] - zapisz");
                     System.out.println("[N] - porzuć");
                     String wybor1 = scanner.next();
-                    if("T".equalsIgnoreCase(wybor1)) {
+                    if ("T".equalsIgnoreCase(wybor1)) {
                         listaPracownikow.add(nowyPracownik);
                         System.out.println("Pracownik jest dodany");
 
-                    }else{
+                    } else {
                         System.out.println("Anulowanie");
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     System.out.println(e);
                 }
-            }
-            else if(wybor == 3){
+            } else if (wybor == 3) {
                 wyswietlListePracownikow(listaPracownikow);
-                Pracownik usunieciePracownika = new Pracownik();
-                usunieciePracownika.usunieciePracownika(scanner,listaPracownikow);
-            }else if(wybor == 4) {
-                System.out.println("(1)Chcesz zachować pracowników?");
-                System.out.println("(2)Chcesz odczytać pracowników?");
-                System.out.println("(3)Chcesz zachować jednego pracownika ta w sposób asynchroniczy?");
-                System.out.println("(4)Chcesz odczytać jednego pracownika ta w sposób asynchroniczy?");
-                Pracownik pracowniki = new Pracownik();
-                int wybor2 = scanner.nextInt();
-                if (wybor2 == 1) {
-                    System.out.println("[T] - podtwierdź");
+                System.out.println("Napisz pesel tego kogo chcesz usunąć");
+                System.out.print("Pesel: ");
+                pesel = scanner.next();
+                Pracownik pracownik = new Pracownik();
+                if (pracownik.getPesel().equals(pesel)) {
+                    System.out.println("[T] - potwierdź");
                     System.out.println("[N] - porzuć");
-                    String wybor1 = scanner.next();
-                    if ("T".equalsIgnoreCase(wybor1)) {
-                        pracowniki.zapisanieDanych(listaPracownikow);
-                        System.out.println("Pracowniki są zapisani");
+                    String wybor4 = scanner.next();
+                    if ("T".equalsIgnoreCase(wybor4)) {
+                        Pracownik usunieciePracownika = new Pracownik();
+                        usunieciePracownika.usunieciePracownika(scanner, listaPracownikow);
+                            System.out.println("Pracownik usuniety");
                     } else {
                         System.out.println("Anulowanie");
                     }
-                } else if (wybor2 == 2) {
-                    System.out.println("[T] - podtwierdź");
-                    System.out.println("[N] - porzuć");
-                    String wybor1 = scanner.next();
-                    if ("T".equalsIgnoreCase(wybor1)) {
-                        pracowniki.odczytDanych();
-                    } else {
-                        System.out.println("Anulowanie");
-                    }
-                } else if (wybor2 == 3){
-                    System.out.println("Lista pracowników:");
-                    wyswietlListePracownikow(listaPracownikow);
-                    System.out.println("Zapisz pesel tego kogo zapisać");
-                    System.out.print("Pesel: ");
-                    String pesel = scanner.next();
-                    boolean flaga = false;
-                    for(Pracownik pracownik :listaPracownikow
-                    ) {
-                        if (pesel.equals(pracownik.getPesel())) {
-                            flaga = true;
+                }
+                    } else if (wybor == 4) {
+                        System.out.println("(1)Chcesz zachować pracowników?");
+                        System.out.println("(2)Chcesz odczytać pracowników?");
+                        System.out.println("(3)Chcesz zachować jednego pracownika ta w sposób asynchroniczy?");
+                        System.out.println("(4)Chcesz odczytać jednego pracownika ta w sposób asynchroniczy?");
+                        Pracownik pracowniki = new Pracownik();
+                        int wybor2 = scanner.nextInt();
+                        if (wybor2 == 1) {
                             System.out.println("[T] - podtwierdź");
                             System.out.println("[N] - porzuć");
                             String wybor1 = scanner.next();
                             if ("T".equalsIgnoreCase(wybor1)) {
-                                pracowniki.zapisDanychPracownikaAsync(Collections.singletonList(pracownik));
-                                System.out.println("Pracownik jest zapisany");
+                                pracowniki.zapisanieDanych(listaPracownikow,new File("C:/all/1.txt"));
+                                System.out.println("Pracowniki są zapisani");
                             } else {
                                 System.out.println("Anulowanie");
                             }
-                        }
-                    }
-                    if(!flaga){
-                            System.out.println("Nie prawidłowy pesel");
-                        }
-                } else if(wybor2 == 4){
-                    System.out.println("[T] - potwierdź");
-                    System.out.println("[N] - porzuć");
-                    String wybor1 = scanner.next();
-                    Pracownik pracownik = new Pracownik();
-                    if ("T".equalsIgnoreCase(wybor1)){
-                        File pliki = new File("C:/all/pesel/");
-                        List<File> plikiList = new ArrayList<>(Arrays.asList(pliki.listFiles()));
-
-                        CompletableFuture<Void> result = pracownik.odczytDanychPracownikaAsync(plikiList, listaPracownikow)
-                                .thenAccept(updatedList -> {
-                                    System.out.println("Pracownicy są odczytani");
-                                });
-                        try {
-                                 result.get();
-                            } catch (ExecutionException e) {
-                                throw new RuntimeException(e);
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
+                        } else if (wybor2 == 2) {
+                            System.out.println("[T] - podtwierdź");
+                            System.out.println("[N] - porzuć");
+                            String wybor1 = scanner.next();
+                            if ("T".equalsIgnoreCase(wybor1)) {
+                                pracowniki.odczytDanych();
+                            } else {
+                                System.out.println("Anulowanie");
                             }
-                        }
-                        } else {
-                        System.out.println("Anulowanie");
-                    }
-                }
+                        } else if (wybor2 == 3) {
+                            System.out.println("Lista pracowników:");
+                            wyswietlListePracownikow(listaPracownikow);
+                            System.out.println("Zapisz pesel tego kogo zapisać");
+                            System.out.print("Pesel: ");
+                            pesel = scanner.next();
+                            boolean flaga = false;
+                            for (Pracownik pracownik : listaPracownikow
+                            ) {
+                                if (pesel.equals(pracownik.getPesel())) {
+                                    flaga = true;
+                                    System.out.println("[T] - podtwierdź");
+                                    System.out.println("[N] - porzuć");
+                                    String wybor1 = scanner.next();
+                                    if ("T".equalsIgnoreCase(wybor1)) {
+                                        pracowniki.zapisDanychPracownikaAsync(Collections.singletonList(pracownik));
+                                        System.out.println("Pracownik jest zapisany");
+                                    } else {
+                                        System.out.println("Anulowanie");
+                                    }
+                                }
+                            }
+                            if (!flaga) {
+                                System.out.println("Nie prawidłowy pesel");
+                            }
+                        } else if (wybor2 == 4) {
+                            System.out.println("[T] - potwierdź");
+                            System.out.println("[N] - porzuć");
+                            String wybor1 = scanner.next();
+                            Pracownik pracownik = new Pracownik();
+                            if ("T".equalsIgnoreCase(wybor1)) {
+                                File pliki = new File("C:/all/pesel/");
+                                List<File> plikiList = new ArrayList<>(Arrays.asList(pliki.listFiles()));
 
-        } while (wybor != 0);
-    }
+                                CompletableFuture<Void> result = pracownik.odczytDanychPracownikaAsync(plikiList, listaPracownikow)
+                                        .thenAccept(updatedList -> {
+                                            System.out.println("Pracownicy są odczytani");
+                                        });
+                                try {
+                                    result.get();
+                                } catch (ExecutionException e) {
+                                    throw new RuntimeException(e);
+                                } catch (InterruptedException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        } else {
+                            System.out.println("Anulowanie");
+                        }
+                    }
+
+                }
+                while (wybor != 0) ;
+            }
 
     public static List<Pracownik> wyswietlListePracownikow(List<Pracownik> lista) {
         for (Pracownik pracownik : lista) {

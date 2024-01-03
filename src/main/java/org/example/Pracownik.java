@@ -35,6 +35,9 @@ public class Pracownik implements Serializable {
     public Pracownik() {
     }
 
+    public Pracownik(String pesel) {
+    }
+
     public String toString(){
         return "\nPESEL: " + pesel +
                 "\n" + "Imię: " + imie +
@@ -114,40 +117,27 @@ public class Pracownik implements Serializable {
 
     }
     public void usunieciePracownika(Scanner scanner,List<Pracownik> listaPracownikow) {
-        System.out.println("Napisz pesel tego kogo chcesz usunąć");
-        System.out.print("Pesel: ");
         pesel = scanner.next();
         Iterator<Pracownik> iterator = listaPracownikow.iterator();
         while(iterator.hasNext()) {
             Pracownik pracownik = iterator.next();
-            if (pracownik.getPesel().equals(pesel)) {
-                System.out.println("[T] - potwierdź");
-                System.out.println("[N] - porzuć");
-                String wybor = scanner.next();
-                if("T".equalsIgnoreCase(wybor)) {
                     iterator.remove();
-                    System.out.println("Pracownik usunięty");
-                    return;
-                }else{
-                    System.out.println("Anulowanie");
-                }
                 return;
             }
-        }
     }
-    public void sprawdzeniePesela(List<Pracownik> listaPracownikow,String pesel){
+    public Object sprawdzeniePesela(List<Pracownik> listaPracownikow, String pesel){
         for (Pracownik pracownik:
                 listaPracownikow
         ) {
             if(pesel.equals(pracownik.getPesel())){
-                throw new NumberFormatException("Taki pesel już istnieje");
+                return false;
             }if(pesel.length()!=11){
-                throw new NumberFormatException("Musi być 11 cyfr w peselu");
+                return false;
             }
         }
+        return true;
     }
-    public void zapisanieDanych(List<Pracownik> listaPracownikow) {
-        File file = new File("C:/all/1.txt");
+    public boolean zapisanieDanych(List<Pracownik> listaPracownikow, File file) {
         ObjectOutputStream oos = null;
         try {
             FileOutputStream fos = new FileOutputStream(file);
@@ -156,18 +146,19 @@ public class Pracownik implements Serializable {
                 oos.writeObject(listaPracownikow);
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            return false;
         } catch (IOException e) {
-            e.printStackTrace();
+            return false;
         } finally {
             if (oos != null) {
                 try {
                     oos.close();
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    return false;
                 }
             }
         }
+        return true;
     }
     public void odczytDanych() throws IOException {
         File file_in  = new File("C:/all/1.txt");
@@ -273,6 +264,7 @@ public class Pracownik implements Serializable {
                                      .toList())
         .whenComplete((result,throwable)->executorService.shutdown());
     }
+
 }
 
 
