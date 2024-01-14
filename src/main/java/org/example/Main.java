@@ -7,7 +7,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         System.setProperty("console.encoding", "UTF-8");
         Scanner scanner = new Scanner(System.in);
         List<Pracownik> listaPracownikow = new ArrayList<>();
@@ -33,11 +33,12 @@ public class Main {
                     Pracownik nowyPracownik = new Pracownik();
                     nowyPracownik.dodaniePracownika(scanner);
                     nowyPracownik.sprawdzeniePesela(listaPracownikow, nowyPracownik.getPesel());
-                    System.out.println("[T] - zapisz");
+                    System.out.println("[Enter] - zapisz");
                     System.out.println("[N] - porzuć");
-                    String wybor1 = scanner.next();
-                    if ("T".equalsIgnoreCase(wybor1)) {
+                    String wybor1 = scanner.nextLine();
+                    if ("".equalsIgnoreCase(wybor1)) {
                         listaPracownikow.add(nowyPracownik);
+                        scanner.nextLine();
                         System.out.println("Pracownik jest dodany");
 
                     } else {
@@ -53,12 +54,13 @@ public class Main {
                 pesel = scanner.next();
                 Pracownik pracownik = new Pracownik();
                 if (pracownik.getPesel().equals(pesel)) {
-                    System.out.println("[T] - potwierdź");
+                    System.out.println("[Enter] - potwierdź");
                     System.out.println("[N] - porzuć");
-                    String wybor4 = scanner.next();
-                    if ("T".equalsIgnoreCase(wybor4)) {
+                    String wybor4 = scanner.nextLine();
+                    if ("".equalsIgnoreCase(wybor4)) {
                         Pracownik usunieciePracownika = new Pracownik();
                         usunieciePracownika.usunieciePracownika(scanner, listaPracownikow);
+                        scanner.nextLine();
                             System.out.println("Pracownik usuniety");
                     } else {
                         System.out.println("Anulowanie");
@@ -72,20 +74,22 @@ public class Main {
                         Pracownik pracowniki = new Pracownik();
                         int wybor2 = scanner.nextInt();
                         if (wybor2 == 1) {
-                            System.out.println("[T] - podtwierdź");
+                            System.out.println("[Enter] - podtwierdź");
                             System.out.println("[N] - porzuć");
-                            String wybor1 = scanner.next();
-                            if ("T".equalsIgnoreCase(wybor1)) {
+                            String wybor1 = scanner.nextLine();
+                            if ("".equalsIgnoreCase(wybor1)) {
                                 pracowniki.zapisanieDanych(listaPracownikow,new File("C:/all/1.txt"));
+                                scanner.nextLine();
                                 System.out.println("Pracowniki są zapisani");
                             } else {
                                 System.out.println("Anulowanie");
                             }
                         } else if (wybor2 == 2) {
-                            System.out.println("[T] - podtwierdź");
+                            System.out.println("[Enter] - podtwierdź");
                             System.out.println("[N] - porzuć");
-                            String wybor1 = scanner.next();
-                            if ("T".equalsIgnoreCase(wybor1)) {
+                            String wybor1 = scanner.nextLine();
+                            if ("".equalsIgnoreCase(wybor1)) {
+                                scanner.nextLine();
                                 pracowniki.odczytDanych();
                             } else {
                                 System.out.println("Anulowanie");
@@ -101,12 +105,14 @@ public class Main {
                             ) {
                                 if (pesel.equals(pracownik.getPesel())) {
                                     flaga = true;
-                                    System.out.println("[T] - podtwierdź");
+                                    scanner.nextLine();
+                                    System.out.println("[Enter] - podtwierdź");
                                     System.out.println("[N] - porzuć");
-                                    String wybor1 = scanner.next();
-                                    if ("T".equalsIgnoreCase(wybor1)) {
+                                    String wybor1 = scanner.nextLine();
+                                    if ("".equalsIgnoreCase(wybor1)) {
                                         pracowniki.zapisDanychPracownikaAsync(Collections.singletonList(pracownik));
                                         System.out.println("Pracownik jest zapisany");
+                                        scanner.nextLine();
                                     } else {
                                         System.out.println("Anulowanie");
                                     }
@@ -116,17 +122,18 @@ public class Main {
                                 System.out.println("Nie prawidłowy pesel");
                             }
                         } else if (wybor2 == 4) {
-                            System.out.println("[T] - potwierdź");
+                            System.out.println("[Enter] - potwierdź");
                             System.out.println("[N] - porzuć");
-                            String wybor1 = scanner.next();
+                            String wybor1 = scanner.nextLine();
+                            scanner.nextLine();
                             Pracownik pracownik = new Pracownik();
-                            if ("T".equalsIgnoreCase(wybor1)) {
+                            if ("".equalsIgnoreCase(wybor1)) {
                                 File pliki = new File("C:/all/pesel/");
                                 List<File> plikiList = new ArrayList<>(Arrays.asList(pliki.listFiles()));
 
                                 CompletableFuture<Void> result = pracownik.odczytDanychPracownikaAsync(plikiList, listaPracownikow)
                                         .thenAccept(updatedList -> {
-                                            System.out.println("Pracownicy są odczytani");
+                                            System.out.println("Pracowniki są odczytani");
                                         });
                                 try {
                                     result.get();

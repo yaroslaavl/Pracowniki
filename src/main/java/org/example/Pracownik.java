@@ -1,5 +1,6 @@
 package org.example;
 
+import com.fasterxml.jackson.core.JsonFactoryBuilder;
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,6 +12,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.*;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.zip.*;
@@ -137,28 +141,13 @@ public class Pracownik implements Serializable {
         }
         return true;
     }
-    public boolean zapisanieDanych(List<Pracownik> listaPracownikow, File file) {
-        ObjectOutputStream oos = null;
+    public void zapisanieDanych(List<Pracownik> listaPracownikow, File file) {
         try {
-            FileOutputStream fos = new FileOutputStream(file);
-            if (fos != null) {
-                oos = new ObjectOutputStream(fos);
-                oos.writeObject(listaPracownikow);
-            }
-        } catch (FileNotFoundException e) {
-            return false;
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.writeValue(file, listaPracownikow);
         } catch (IOException e) {
-            return false;
-        } finally {
-            if (oos != null) {
-                try {
-                    oos.close();
-                } catch (IOException e) {
-                    return false;
-                }
-            }
+            throw new RuntimeException("Error writing data to file", e);
         }
-        return true;
     }
     public void odczytDanych() throws IOException {
         File file_in  = new File("C:/all/1.txt");
@@ -169,24 +158,27 @@ public class Pracownik implements Serializable {
             System.out.println("Plik pusty");
             return;
         }
-        BufferedInputStream in = new BufferedInputStream (new FileInputStream(file_in));
-        BufferedOutputStream out = new BufferedOutputStream (new GZIPOutputStream(new FileOutputStream(file_out)));
-        int c;
-        while ((c = in.read()) != -1) out.write (c);
-        in.close();
+        BufferedInputStream out = new BufferedInputStream (new GZIPInputStream(new FileInputStream(file_out)));
+        ObjectInputStream objectInputStream = new ObjectInputStream(out);
+        List<Pracownik> listaPracownikow = null;
+        try {
+            listaPracownikow = (List<Pracownik>) objectInputStream.readObject();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        objectInputStream.close();
         out.close();
-        BufferedReader file_in2 = new BufferedReader (new InputStreamReader (new GZIPInputStream(new FileInputStream(file_out))));
-        String s;
-        while ((s = file_in2.readLine()) != null) {
-            if (!s.isEmpty()) {
-                System.out.println(s);
-            }
-        }file_in2.close();
+
+        for (Pracownik pracownik : listaPracownikow) {
+            System.out.println(pracownik);
+        }
         System.out.println("Pracowniki są odczytani");
     }
 
-    public void zapisDanychJednegoPracownika(Pracownik pracownik) throws IOException {
+    public Pracownik zapisDanychJednegoPracownika(Pracownik pracownik) throws IOException {
+        if(pesel!=null){
         File file_in = new File("C:/all/pesel/" + pracownik.getPesel() + ".txt");
+
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             try (FileOutputStream fos = new FileOutputStream(file_in)) {
@@ -196,7 +188,9 @@ public class Pracownik implements Serializable {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+         }
         }
+        return pracownik;
     }
     public void zapisDanychPracownikaAsync(List<Pracownik> listaPracownikow){
         ExecutorService executor = Executors.newFixedThreadPool(10);
@@ -229,7 +223,7 @@ public class Pracownik implements Serializable {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             if (plik.exists()) {
-                System.out.println("JSON Content: " + Files.readString(plik.toPath()));
+                System.out.println("JSON: " + Files.readString(plik.toPath()));
                 Pracownik pracownik = objectMapper.readValue(plik, Pracownik.class);
                 return pracownik;
             } else {
@@ -247,23 +241,29 @@ public class Pracownik implements Serializable {
     public CompletableFuture<List<Pracownik>> odczytDanychPracownikaAsync(List<File> listaPlikow, List<Pracownik> listaPracownikow) {
         ExecutorService executorService = Executors.newFixedThreadPool(10);
 
-        List<CompletableFuture<Pracownik>> futures = listaPlikow.stream()
-                .map(file -> CompletableFuture.supplyAsync(()-> {
-                    return odczytDanychJednegoPracownika(file);
-                },executorService))
-                .collect(Collectors.toList());
-             return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
-                     .thenApply(ignored ->
-                             futures.stream()
-                                     .map(CompletableFuture::join)
-                                     .peek(pracownik -> {
-                                         if (!listaPracownikow.contains(pracownik)) {
-                                             listaPracownikow.add(pracownik);
-                                         }
-                                     })
-                                     .toList())
-        .whenComplete((result,throwable)->executorService.shutdown());
+        List<CompletableFuture<Pracownik>> futures = new ArrayList<>();
+        for (File file : listaPlikow) {
+            CompletableFuture<Pracownik> future = CompletableFuture.supplyAsync(() -> {
+                return odczytDanychJednegoPracownika(file);
+            }, executorService);
+            futures.add(future);
+        }
+
+        return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
+                .thenApply(ignored -> {
+                    List<Pracownik> result = new ArrayList<>();
+                    for (CompletableFuture<Pracownik> future : futures) {
+                        Pracownik pracownik = future.join();
+                        if (!listaPracownikow.contains(pracownik)) {
+                            listaPracownikow.add(pracownik);
+                        }
+                        result.add(pracownik);
+                    }
+                    return result;
+                })
+                .whenComplete((result, throwable) -> executorService.shutdown());
     }
+
 
 }
 
